@@ -3,3 +3,4 @@ main.vcxproj.filters
 main.vcxproj.user
 x64
 /readme*
+.vscode/tasks.json
