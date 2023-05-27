@@ -23,8 +23,11 @@ enum Items
 
 int main ()
 {
-    int items[MAX_ITEMS] = {3, 6, 12};
-    std::cout << countTotalItems(items, MAX_ITEMS);
+    int items[MAX_ITEMS];
+    items[HEALTH_POISON] = 3;
+    items[TORCHS] = 6;
+    items[ARROWS] = 12;
+    std::cout <<"Total items of player: " << countTotalItems(items, MAX_ITEMS);
 
     return 0;
 
