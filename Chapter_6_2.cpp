@@ -80,6 +80,7 @@ int main()
     }
     SelectionSort(students, numStudents);
     printStudents(students, numStudents);
+    delete[] students;
 
     return 0;
 }

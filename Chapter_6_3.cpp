@@ -18,11 +18,11 @@ int getDigit()
     
 }
 
-void changeDigit(int *a, int *b)
+void changeDigit(int &a, int &b)
 {
-    int temp = *a;
-    *a = *b;
-    *b = temp;
+    int temp = a;
+    a = b;
+    b = temp;
 
 }
 
@@ -33,7 +33,7 @@ int main()
     a = getDigit();
     std::cout << "Enter a dgit \"b\": " << std::endl;
     b = getDigit();
-    changeDigit(&a,&b);
+    changeDigit(a, b);
     std::cout << "a = " << a << std::endl;
     std::cout << "b = " << b << std::endl;
 
