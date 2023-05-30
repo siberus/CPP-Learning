@@ -122,7 +122,12 @@ void shuffleDeck(std::array<Card, g_numberCards> &p_deck)
 
 int getCardValue(Card &p_card)
 {
-    return (static_cast<int>(p_card.level)+2);
+    int value = static_cast<int>(p_card.level)+2;
+    if( (value > 10) && (value < 14) )
+        value = 10;
+    if (value == 14)
+        value = 11;
+    return value;
 }
 
 int main()
@@ -131,6 +136,8 @@ int main()
     std::array<Card, g_numberCards> deck;
     cardInit(deck);
     printDeck(deck);
+    std::cout << std::endl;
+    std::cout << getCardValue(deck[51]) << std::endl;
     shuffleDeck(deck);
     printDeck(deck);
     std::cout << std::endl;
