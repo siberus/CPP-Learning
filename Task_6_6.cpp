@@ -74,12 +74,16 @@ void printCard(const Card &p_card)
 
 void cardInit(std::array <Card, g_numberCards> &p_deck)
 {
+    int i = 0;
     for (int countSuit = 0;  countSuit < MAX_SUITS; ++countSuit)
     {
         for (int countLevel = 0; countLevel < MAX_RANGE; ++countLevel)
         {
-            p_deck[(countSuit*13)+(countLevel)].level = static_cast<Levels>(countLevel);
-            p_deck[(countSuit*13)+(countLevel)].suit = static_cast<Suits>(countSuit);
+           /*  p_deck[(countSuit*13)+(countLevel)].level = static_cast<Levels>(countLevel);
+            p_deck[(countSuit*13)+(countLevel)].suit = static_cast<Suits>(countSuit); */
+            p_deck[i].level = static_cast<Levels>(countLevel);
+            p_deck[i].suit = static_cast<Suits>(countSuit);
+            ++i;
         }
         
     }
