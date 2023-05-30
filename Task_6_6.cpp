@@ -1,8 +1,11 @@
 #include <iostream>
 #include <array>
+#include <algorithm>
+#include <cstdlib>
+#include <time.h>
 
-int g_ascii_2 = 50;
-int g_numberCards = 52;
+//const int g_ascii_2 = 50;
+const int g_numberCards = 52;
 
 enum Levels
 {
@@ -33,75 +36,106 @@ enum Suits
 
 struct Card
 {
-    int level;
-    int suit;
+    Levels level;
+    Suits suit;
 };
 
 void printCard(const Card &p_card)
 {
     char letterLevel, letterSuit;
-    if(p_card.level < CARD_10)
-    {  
-        letterLevel = static_cast<char>(CARD_3 + g_ascii_0);
-    }
-    else
+  
+    switch (p_card.level)
     {
-        switch (p_card.level)
-        {
-        case CARD_10:
-            letterLevel = '0';
-            break;
-        case CARD_V:
-            letterLevel = 'V';
-            break;
-        case CARD_D:
-            letterLevel = 'D';
-            break;
-        case CARD_K:
-            letterLevel = 'K';
-            break;
-        case CARD_T:
-            letterLevel = 'T';
-            break;
-        }
+        case CARD_2:  letterLevel = '2';  break;
+        case CARD_3:  letterLevel = '3';  break;
+        case CARD_4:  letterLevel = '4';  break;
+        case CARD_5:  letterLevel = '5';  break;
+        case CARD_6:  letterLevel = '6';  break;
+        case CARD_7:  letterLevel = '7';  break;
+        case CARD_8:  letterLevel = '8';  break;
+        case CARD_9:  letterLevel = '9';  break;
+        case CARD_10:  letterLevel = '0';  break;
+        case CARD_V:   letterLevel = 'V';  break;
+        case CARD_D:   letterLevel = 'D';  break;
+        case CARD_K:   letterLevel = 'K';  break;
+        case CARD_T:   letterLevel = 'T';  break;
+    
     }
     switch (p_card.suit)
     {
-    case CLUBS:
-        letterSuit = 'C';
-        break;
-    case DIAMONDS:
-        letterSuit = 'D';
-        break;
-    case HEARTS:
-        letterSuit = 'H';
-        break;
-    case SPADES:
-        letterSuit = 'S';
-        break;
+        case CLUBS:  letterSuit = 'C';  break;
+        case DIAMONDS:  letterSuit = 'D';  break;
+        case HEARTS:  letterSuit = 'H';  break;
+        case SPADES:  letterSuit = 'S';  break;
     }
-    std::cout << "Card: " << letterLevel << letterSuit << std::endl;
+    std::cout << letterLevel << letterSuit;
 
 }
 
-void cardInit(const std::array <Card, g_numberCards> &p_deck)
+void cardInit(std::array <Card, g_numberCards> &p_deck)
 {
+    for (int countSuit = 0;  countSuit < MAX_SUITS; ++countSuit)
+    {
+        for (int countLevel = 0; countLevel < MAX_RANGE; ++countLevel)
+        {
+            p_deck[(countSuit*13)+(countLevel)].level = static_cast<Levels>(countLevel);
+            p_deck[(countSuit*13)+(countLevel)].suit = static_cast<Suits>(countSuit);
+        }
+        
+    }
+    
+}
 
+void printDeck(const std::array<Card, g_numberCards> &p_deck)
+{
+    for (const auto element : p_deck)
+    {
+        printCard(element);
+        std::cout << ' ';
+    }
+    std::cout << std::endl;
+}
+
+void swapCard(Card &firstCard, Card &secondCard)
+{
+    std::swap(firstCard, secondCard);
+}
+
+int getRandomNumber(int min, int max)
+{
+    static const double fraction = 1.0/(static_cast<double>(RAND_MAX) + 1.0);
+        return static_cast<int>(rand()*fraction*(max - min + 1) + min);
+}
+
+void shuffleDeck(std::array<Card, g_numberCards> &p_deck)
+{
+    for(auto &element : p_deck)
+    {
+        int numRandomCard = getRandomNumber(0, 51);
+        swapCard(element, p_deck[numRandomCard]);
+    }
+}
+
+int getCardValue(Card &p_card)
+{
+    return (static_cast<int>(p_card.level)+2);
 }
 
 int main()
 {
-    Card cadr_1, card_2, card_3;
-    cadr_1.level = CARD_3; cadr_1.suit = HEARTS;
-    card_2.level = CARD_10; card_2.suit = SPADES;
-    card_3.level = CARD_K; card_3.suit = DIAMONDS;
-    printCard(cadr_1);
-    printCard(card_2);
-    printCard(card_3);
-    //-------------------------------------------
-    std::array<Card, 52> deck;
+    srand(static_cast<unsigned int>(time(0)));
+    std::array<Card, g_numberCards> deck;
     cardInit(deck);
-
-
+    printDeck(deck);
+    shuffleDeck(deck);
+    printDeck(deck);
+    std::cout << std::endl;
+    std::cout << getCardValue(deck[4]) << std::endl;
+    std::cout << getCardValue(deck[8]) << std::endl;
+    std::cout << getCardValue(deck[20]) << std::endl;
+    std::cout << getCardValue(deck[10]) << std::endl;
+    std::cout << getCardValue(deck[42]) << std::endl;
+    std::cout << getCardValue(deck[35]) << std::endl;
+    
     return 0;
 }
