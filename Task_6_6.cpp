@@ -69,8 +69,24 @@ void printCard(const Card &p_card)
         case SPADES:  letterSuit = 'S';  break;
     }
     std::cout << letterLevel << letterSuit;
-
 }
+
+bool getChoice()
+{
+    std::cout << "(h) to hit, or (s) to stand: "; 
+    char choice; 
+    do 
+    { 
+        //std::cout << '\b';
+        std::cin >> choice; 
+    } while (choice != 'h' && choice != 's'); 
+    if (choice == 'h')
+        return true;
+    else
+        return false;    
+}
+
+
 
 void cardInit(std::array <Card, g_numberCards> &p_deck)
 {
@@ -120,7 +136,7 @@ void shuffleDeck(std::array<Card, g_numberCards> &p_deck)
     }
 }
 
-int getCardValue(Card &p_card)
+int getCardValue(const Card &p_card)
 {
     int value = static_cast<int>(p_card.level)+2;
     if( (value > 10) && (value < 14) )
@@ -130,23 +146,88 @@ int getCardValue(Card &p_card)
     return value;
 }
 
+bool playBlackjack(const std::array <Card, g_numberCards> &p_deck)
+{
+    const Card *cardPtr = &p_deck[0];
+    int playerCount  = 0;
+    int dealerCount = 0;
+    // Дилер получает одну карту
+    dealerCount += getCardValue(*cardPtr++); 
+    std::cout << "The dealer is showing: " << dealerCount << std::endl;
+    // Игрок получает две карты
+    playerCount += getCardValue(*cardPtr++); 
+    playerCount += getCardValue(*cardPtr++);
+    // Игрок начинает
+    while (true)
+    {
+        std::cout << "You have: " << playerCount << std::endl;
+        // Смотрим, не больше ли 21 очка у игрока
+        if (playerCount > 21) 
+            return false;
+        if (!getChoice())
+            break; 
+        //Игрок берет карту
+        playerCount += getCardValue(*cardPtr++);
+    }
+
+    // Если игрок не проиграл и у него не больше 21 очка, 
+    //то тогда дилер получает карты до тех пор, пока у него не получится в сумме 17 очков
+    while (dealerCount < 17)
+    {
+        dealerCount += getCardValue(*cardPtr++);
+        std::cout << "The dealer now has: " << dealerCount << std::endl;
+    }
+    
+    // Если у дилера больше 21 очка, то игрок победил 
+    if (dealerCount > 21) 
+        return true; 
+    return (playerCount > dealerCount);
+
+   /*  std::cout << "Your cards: " << std::endl;
+    printCard(p_deck[indexDeck]);
+    std::cout << std::endl;
+    player += getCardValue(p_deck[indexDeck]);
+    ++indexDeck;
+    while (getChoise())
+    {
+        printCard(p_deck[indexDeck]);
+        std::cout << std::endl;
+        player += getCardValue(p_deck[indexDeck]);
+        ++indexDeck;
+    }
+    if (player > 21)
+    {
+        return false;
+    }
+    while (diller < 17)
+    {
+        diller += getCardValue(p_deck[indexDeck]);
+        ++indexDeck;
+    }
+    if (diller > 21)
+    {
+        return true;
+    }
+    return player < diller ? false : true; */
+}
+
 int main()
 {
     srand(static_cast<unsigned int>(time(0)));
     std::array<Card, g_numberCards> deck;
     cardInit(deck);
-    printDeck(deck);
-    std::cout << std::endl;
-    std::cout << getCardValue(deck[51]) << std::endl;
+    //printDeck(deck);
     shuffleDeck(deck);
-    printDeck(deck);
-    std::cout << std::endl;
-    std::cout << getCardValue(deck[4]) << std::endl;
-    std::cout << getCardValue(deck[8]) << std::endl;
-    std::cout << getCardValue(deck[20]) << std::endl;
-    std::cout << getCardValue(deck[10]) << std::endl;
-    std::cout << getCardValue(deck[42]) << std::endl;
-    std::cout << getCardValue(deck[35]) << std::endl;
+    //printDeck(deck);
+
+    if(playBlackjack(deck))
+    {
+        std::cout << " You  won!!!" << std::endl;
+    }
+    else
+    {
+        std::cout << " You  lose!!!" << std::endl;
+    }
     
     return 0;
 }
