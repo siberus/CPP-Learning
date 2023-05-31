@@ -222,12 +222,16 @@ int main()
 
     if(playBlackjack(deck))
     {
-        std::cout << " You  won!!!" << std::endl;
+        std::cout << "You  won!!!" << std::endl;
     }
     else
     {
-        std::cout << " You  lose!!!" << std::endl;
+        std::cout << "You  lose!!!" << std::endl;
     }
+
+    std::cin.clear(); 
+    std::cin.ignore(32767, '\n'); 
+    std::cin.get();
     
     return 0;
 }
