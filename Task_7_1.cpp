@@ -33,6 +33,18 @@ char getOperator()
     return op;
 }
 
+int add(int a, int b)
+{return a + b;}
+
+int substract(int a, int b)
+{return a - b;}
+
+int mltiply(int a, int b)
+{return a * b;}
+
+int divide(int a, int b)
+{return a / b;}
+
 int  main()
 {
     std::cout << "First digit" << std::endl;
@@ -40,8 +52,6 @@ int  main()
     std::cout << "Second digit" << std::endl;
     int b = getNum();
     char op = getOperator();
-
-
 
     return 0;
 }
