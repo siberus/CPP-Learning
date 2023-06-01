@@ -24,7 +24,7 @@ char getOperator()
     char op;
     do
     {
-        std::cout << "Enter an operator (\"+\", \"-\", \"*\", \"\\\"): ";
+        std::cout << "Enter an operator (\"+\", \"-\", \"*\", \"/\"): ";
         std::cin >> op;
         if(op == '+' || op == '-' || op == '*' || op == '/')
             break;
@@ -39,11 +39,24 @@ int add(int a, int b)
 int substract(int a, int b)
 {return a - b;}
 
-int mltiply(int a, int b)
+int multiply(int a, int b)
 {return a * b;}
 
 int divide(int a, int b)
 {return a / b;}
+
+typedef int (*arithmeticFcn)(int, int);
+
+arithmeticFcn getArithmeticFcn(char op)
+{
+    switch (op)
+    {
+    case '+': return add;
+    case '-': return substract;
+    case '*': return multiply;
+    case '/': return divide;
+    }
+}
 
 int  main()
 {
@@ -52,6 +65,7 @@ int  main()
     std::cout << "Second digit" << std::endl;
     int b = getNum();
     char op = getOperator();
-
+    arithmeticFcn fcn = getArithmeticFcn(op);
+    std::cout << a << " " << op << " " << b << " = " << fcn(a,b) << std::endl;
     return 0;
 }
