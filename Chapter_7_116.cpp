@@ -8,5 +8,9 @@ int main(int argc, char *argv[])
     for (int count=0; count < argc; ++count) 
     std::cout << count << " " << argv[count] << '\n'; 
     
+    std::cin.clear();
+    std::cin.ignore(32767, '\n');
+    std::getchar();
+
     return 0; 
 }
