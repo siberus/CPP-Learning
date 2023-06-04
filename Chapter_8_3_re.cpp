@@ -2,28 +2,25 @@
 
 int binarySearch(int *array, int target, int min, int max) 
 {
-   // int index =max/2;
-    do
+    
+    if(min > max)
+        return -1;
+    
+    int index = (max-min)/2+min;;
+    if(array[index] == target)
+        return index;
+    else
     {
-        int index = (max-min)/2+min;
-        if(array[index] == target)
-            return index;
+        if(array[index] > target)
+        {
+            return binarySearch(array, target, min, index-1);
+        }   
         else
         {
-            if(array[index] > target)
-            {
-                max = index-1;
-                //index = (max-min)/2+min;
-            }   
-            else
-            {
-                min = index+1;
-                //index = (max-min)/2+min;
-            }   
-        }
-        
-    } while (min <=  max);//((index != min) && (index != max));
-    return -1;
+            return binarySearch(array, target, index+1, max);
+        }   
+    }
+    
 } 
 
 int main() 
