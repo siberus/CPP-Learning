@@ -34,21 +34,21 @@ int main()
 	secondDigit = inptDigitRus();
 	if (firstDigit > secondDigit)
 	{
-		std::cout << "Меняем значения местами" << std::endl;
-		std::cout << "Меньшее число: " << secondDigit << std::endl;
-		std::cout << "Большее число: " << firstDigit << std::endl;
+		std::cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << std::endl;
+		std::cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " << secondDigit << std::endl;
+		std::cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " << firstDigit << std::endl;
 	}
 	else
 	{
-		std::cout << "Меньшее число: " << firstDigit << std::endl;
-		std::cout << "Большее число: " << secondDigit << std::endl;
+		std::cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " << firstDigit << std::endl;
+		std::cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " << secondDigit << std::endl;
 	}*/
 
 	std::string yourName;
 	yourName = inputName();
 	int age;
-	age = inputAge();
-	std::cout << "Вы прожили " << ageForLetter(yourName, age) << " лет на каждую букву вашего имени!" << std::endl;
+	//age = inputAge();
+	//std::cout << "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ " << ageForLetter(yourName, age) << " пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!" << std::endl;
 	
 	return 0;
 }
