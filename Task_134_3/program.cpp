@@ -1,7 +1,6 @@
-#include <iostream> 
-#include "Point3D.h"
+//#include <iostream> 
 #include "Vector3D.h"
-
+#include "Point3D.h"
 
  int main() 
  { 
