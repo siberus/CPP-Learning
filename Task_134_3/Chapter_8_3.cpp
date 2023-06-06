@@ -81,10 +81,7 @@ int main()
     srand(static_cast<unsigned int>(time(0)));
     rand(); // пользователям Visual Studio: делаем сброс первого случайного числа
 
-
-    Monster jack(Monster::Orc, "Jack", 90); 
     Monster m = MonsterGenerator::generateMonster();
-    jack.print();
     m.print();
     return 0; 
 }
