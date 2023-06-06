@@ -3,8 +3,6 @@
 #include <cstdlib>
 #include <ctime>
 
-
-
 class Monster
 {
     public:
@@ -51,15 +49,11 @@ class Monster
     {
         std::cout << m_name << " is the " << getTypeString() << " that has " << m_health << " health points." <<std::endl;
     }
-
-
 };
-
 
 class MonsterGenerator
 {
     public:
-    
     // Генерируем случайное число между min и max (включительно). 
     // Предполагается, что srand() уже был вызван 
     static int getRandomNumber(int min, int max) 
@@ -69,8 +63,6 @@ class MonsterGenerator
         // Равномерно распределяем вычисление значения из нашего диапазона 
         return static_cast<int>(rand() * fraction * (max - min + 1) + min); 
     }
-
-    
 
     static Monster generateMonster()
     {
@@ -82,7 +74,6 @@ class MonsterGenerator
 
         return Monster(type, name, health);
     }
-
 };
 
 int main() 
