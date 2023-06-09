@@ -26,7 +26,7 @@ int main()
         } 
     };
 
-//Используем auto. Храним лямбду с её реальным типом (какой тип - так и не разорался)
+//Используем auto. Храним лямбду с её реальным типом (какой тип - так и не разобрался)
 /* auto isSmallest{
     [](const Student &a, const Student &b) -> bool
                             {return (a.grade < b.grade);}
@@ -39,7 +39,7 @@ int main()
 }; */
 
 // Используем std::function. Лямбда может захватывать переменные.
-std::function isSmallest
+std::function<bool(Student&, Student&)>  isSmallest
 {
     [](const Student &a, const Student &b)
                             {return (a.grade < b.grade);}
