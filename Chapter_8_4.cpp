@@ -59,7 +59,7 @@ void printCard(const Card &card)
         case RANK_ACE:      std::cout << 'A';  break;
     
     }
-    switch (p_card.suit)
+    switch (card.suit)
     {
         case SUIT_CLUB:      std::cout <<  'C';  break;
         case SUIT_DIAMOND:   std::cout <<  'D';  break;
@@ -134,15 +134,15 @@ char getPlayerChoice()
         return choice;    
 }
 
-void cardInit(std::array <Card, g_numberCards> &p_deck)
+void cardInit(std::array <Card, g_numberCards> &deck)
 {
     int card = 0;
     for (int suit = 0; suit < MAX_SUITS; ++suit)
     {
         for (int rank = 0; rank < MAX_RANKS; ++rank)
         {
-            p_deck[card].suit = static_cast<CardSuit>(suit);
-            p_deck[card].rank = static_cast<CardSuit>(rank);
+            deck[card].suit = static_cast<CardSuit>(suit);
+            deck[card].rank = static_cast<CardRank>(rank);
             ++card;
         }
         
