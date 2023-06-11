@@ -104,12 +104,19 @@ class Deck
             return static_cast<int>(rand()*fraction*(max - min + 1) + min);
     }
 
-     void swapCard(Card &firstCard, Card &secondCard)
+    /* static void swapCard(Card &firstCard, Card &secondCard)
     {
         Card temp = firstCard;
         firstCard = secondCard;
         secondCard = temp;
-    }
+    } */
+
+     void swapCard(int index, int swapIndex)
+    {
+        Card temp = m_deck[index];
+        m_deck[index] = m_deck[swapIndex];
+        m_deck[swapIndex] = temp;
+    } 
 
     public:
     Deck() 
@@ -140,7 +147,7 @@ class Deck
         for(int index = 0; index < numberCards; ++index)
         {
             int swapIndex = getRandomNumber(0, 51);
-            swapCard(m_deck[index], m_deck[swapIndex]);
+            swapCard(index, swapIndex);
         }
         m_cardIndex = 0;
     }
