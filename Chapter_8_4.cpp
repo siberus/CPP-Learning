@@ -2,6 +2,7 @@
 #include <array>
 #include <cstdlib>
 #include <ctime>
+#include <cassert>
 
 class Card
 {
@@ -147,60 +148,59 @@ class Deck
 
     const Card& dealCard()
     {
+        assert (m_cardIndex < 52);
         return m_deck[m_cardIndex++];
     }
-
-    char getPlayerChoice()
-    {
-        std::cout << "(h) to hit, or (s) to stand: "; 
-        char choice; 
-        do 
-        { 
-            std::cin >> choice; 
-        } while (choice != 'h' && choice != 's'); 
-        
-        return choice;
-    }
-
-    bool playBlackjack()
-    {
-        int playerTotal  = 0;
-        int dealerTotal = 0;
-        // Дилер получает одну карту
-        dealerTotal += dealCard().getCardValue(); 
-        std::cout << "The dealer is showing: " << dealerTotal << std::endl;
-        // Игрок получает две карты
-        playerTotal += dealCard().getCardValue(); 
-        playerTotal += dealCard().getCardValue();
-        // Игрок начинает
-        while (true)
-        {
-            std::cout << "You have: " << playerTotal << std::endl;
-            // Смотрим, не больше ли 21 очка у игрока
-            if (playerTotal > 21) 
-                return false;
-            char choice = getPlayerChoice();
-            if (choice == 's')
-                break; 
-            //Игрок берет карту
-            playerTotal += dealCard().getCardValue();
-        }
-
-        // Если игрок не проиграл и у него не больше 21 очка, 
-        //то тогда дилер получает карты до тех пор, пока у него не получится в сумме 17 очков
-        while (dealerTotal < 17)
-        {
-            dealerTotal += dealCard().getCardValue();
-            std::cout << "The dealer now has: " << dealerTotal << std::endl;
-        }
-        
-        // Если у дилера больше 21 очка, то игрок победил 
-        if (dealerTotal > 21) 
-            return true; 
-        return (playerTotal > dealerTotal);
-    }
-
 };
+char getPlayerChoice()
+{
+    std::cout << "(h) to hit, or (s) to stand: "; 
+    char choice; 
+    do 
+    { 
+        std::cin >> choice; 
+    } while (choice != 'h' && choice != 's'); 
+    
+    return choice;
+}
+
+bool playBlackjack(Deck &deck)
+{
+    int playerTotal  = 0;
+    int dealerTotal = 0;
+    // Дилер получает одну карту
+    dealerTotal += deck.dealCard().getCardValue(); 
+    std::cout << "The dealer is showing: " << dealerTotal << std::endl;
+    // Игрок получает две карты
+    playerTotal += deck.dealCard().getCardValue(); 
+    playerTotal += deck.dealCard().getCardValue();
+    // Игрок начинает
+    while (true)
+    {
+        std::cout << "You have: " << playerTotal << std::endl;
+        // Смотрим, не больше ли 21 очка у игрока
+        if (playerTotal > 21) 
+            return false;
+        char choice = getPlayerChoice();
+        if (choice == 's')
+            break; 
+        //Игрок берет карту
+        playerTotal += deck.dealCard().getCardValue();
+    }
+
+    // Если игрок не проиграл и у него не больше 21 очка, 
+    //то тогда дилер получает карты до тех пор, пока у него не получится в сумме 17 очков
+    while (dealerTotal < 17)
+    {
+        dealerTotal += deck.dealCard().getCardValue();
+        std::cout << "The dealer now has: " << dealerTotal << std::endl;
+    }
+    
+    // Если у дилера больше 21 очка, то игрок победил 
+    if (dealerTotal > 21) 
+        return true; 
+    return (playerTotal > dealerTotal);
+}
 
 
 int main() 
@@ -210,7 +210,7 @@ int main()
     rand(); // пользователям Visual Studio: делаем сброс первого случайного числа 
     Deck deck;
     deck.shuffleDeck(); 
-    if(deck.playBlackjack())
+    if(playBlackjack(deck))
     {
         std::cout << "You  won!!!" << std::endl;
     }
