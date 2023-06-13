@@ -8,7 +8,7 @@ class IntArray
     int m_size = 0;
 
     public:
-    IntArray(){}
+    //IntArray(){}
     IntArray(int size)
     {
         assert(size > 0);
@@ -18,10 +18,13 @@ class IntArray
 
     ~IntArray()
     {
+         std::cout << "Start destrctor. m_array = " << m_array << ", *m_array = " << *m_array << std::endl;
         if (m_array != nullptr)
         {
             delete[] m_array;
+
         }
+        std::cout << "End destrctor. m_array = " << m_array << ", *m_array = " << *m_array << std::endl;
     }
 
     int& operator[] (const int index)
