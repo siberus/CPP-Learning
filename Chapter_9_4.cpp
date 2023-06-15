@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cmath>
+#include <cstdint>
 
 class FixedPoint
 {
@@ -28,6 +30,12 @@ class FixedPoint
         }
     }
 
+    FixedPoint(double d)
+    {
+        m_base = static_cast<int16_t>(d);
+        m_decimal = static_cast<int16_t>(round((d-m_base)*100));
+    }
+
     operator double() const 
     { 
         return m_base + static_cast<double>(m_decimal) / 100; 
@@ -45,7 +53,7 @@ std::ostream& operator<< (std::ostream& out, FixedPoint &fp)
 
 int main() 
 { 
-    FixedPoint a(37, 58); 
+/*     FixedPoint a(37, 58); 
     std::cout << a << '\n'; 
     
      FixedPoint b(-3, 9); 
@@ -60,8 +68,20 @@ int main()
      FixedPoint e(0, -3); 
      std::cout << e << '\n'; 
      
-     std::cout << static_cast<double>(e) << '\n'; 
+     std::cout << static_cast<double>(e) << '\n';  */
+
+     FixedPoint a(0.03); 
+     std::cout << a << '\n'; 
      
+     FixedPoint b(-0.03); 
+     std::cout << b << '\n'; 
+     
+     FixedPoint c(4.01); // сохранится, как 4.0099999..., поэтому нам нужно это всё округлить 
+     std::cout << c << '\n'; 
+     
+     FixedPoint d(-4.01);
+     std::cout << d << '\n';
+
      return 0; 
      
 }
