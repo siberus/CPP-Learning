@@ -42,6 +42,7 @@ class FixedPoint
     }
 
     friend std::ostream& operator<< (std::ostream& out, FixedPoint &a);
+    friend std::istream& operator>> (std::ostream& out, FixedPoint &a);
 };
 
 std::ostream& operator<< (std::ostream& out, FixedPoint &fp)
@@ -50,6 +51,17 @@ std::ostream& operator<< (std::ostream& out, FixedPoint &fp)
 
     return out;
 }
+
+std::istream& operator>> (std::istream& in, FixedPoint &fp)
+{
+    double d;
+    in >> d;
+    fp = FixedPoint(d);
+
+    return in;
+}
+
+
 
 int main() 
 { 
