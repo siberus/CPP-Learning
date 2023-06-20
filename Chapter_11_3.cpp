@@ -1,5 +1,15 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
+
+// Генерируем рандомное число между min и max 
+int getRandomNumber(int min, int max) 
+{ 
+    static const double fraction = 1.0 / (static_cast<double>(RAND_MAX) + 1.0); 
+    // Равномерно распределяем генерацию значения из диапазона 
+    return static_cast<int>(rand() * fraction * (max - min + 1) + min);
+}
 
 class Creature
 {
@@ -92,6 +102,12 @@ class Monster : public Creature
     Monster(Type type) 
      : Creature(monsterData[type].name, monsterData[type].symbol, 
         monsterData[type].health, monsterData[type].damage, monsterData[type].gold) {}
+
+    static Type  getRandomMonster()
+    {
+        return static_cast<Type>(getRandomNumber(0, MAX_TYPES-1));
+    }
+
 };
 
 Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES] 
@@ -103,6 +119,9 @@ Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]
 
 int main()
 {
+    srand(static_cast<unsigned int>(time(0))); // устанавливаем значение системных часов в качестве стартового числа
+    rand(); // сбрасываем первый результат
+
     Creature o("orc", 'o', 4, 2, 10); 
     o.addGold(5); 
     o.reduceHealth(1); 
@@ -114,6 +133,14 @@ int main()
     Player p(name);
     std::cout << "Welcom, " << name << "."  << std::endl;
     std::cout << "You have " << p.getHealth() << " health and are carrying " << p.getGold() << " gold." << std::endl;
+    Monster m(Monster::ORC);
+    std::cout << "A " << m.getName() << " (" << m.getSymbol() << ") was created.\n";
+
+    for (int i = 0; i < 10; ++i) 
+    {
+        Monster m = Monster::getRandomMonster(); 
+        std::cout << "A " << m.getName() << " (" << m.getSymbol() << ") was created.\n";
+    }
 
     return 0;
 }
