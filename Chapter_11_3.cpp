@@ -117,15 +117,52 @@ Monster::MonsterData Monster::monsterData[Monster::MAX_TYPES]
     { "slime", 's', 1, 1, 10 } 
 };
 
+bool fightMonster()
+{
+    std::cout << "(R)un or (F)ight: ";
+    char choice; 
+    do 
+    { 
+        std::cin >> choice; 
+    } while (choice != 'r' && choice != 'f'); 
+    if (choice == 'f')
+        return true;
+    else
+        return false;    
+}
+
+void attackPlayer(Player &p, Monster &m);
+
+void attackMonster(Player &p, Monster &m)
+{
+
+    m.reduceHealth(p.getDamage());
+    std::cout << "You hit the " << m.getName() << " for " << p.getDamage() << " damage." << std::endl;
+            if(m.isDead())
+            {
+                std::cout << "You killed the " << m.getName() << "." << std::endl;
+                p.levelUp();
+                p.addGold(m.getGold());
+                std::cout << "You are now level " << p.getLevel() << "." << std::endl;
+                std::cout << "You found " << m.getGold() << " gold." << std::endl;
+            }
+            else
+            {
+                attackPlayer(p, m);
+            }
+}
+
+void attackPlayer(Player &p, Monster &m)
+{
+    p.reduceHealth(m.getDamage());
+    std::cout << "The " << m.getName() << " hit you for " << m.getDamage() << " damage." << std::endl;
+}
+
+
 int main()
 {
     srand(static_cast<unsigned int>(time(0))); // устанавливаем значение системных часов в качестве стартового числа
     rand(); // сбрасываем первый результат
-
-    Creature o("orc", 'o', 4, 2, 10); 
-    o.addGold(5); 
-    o.reduceHealth(1); 
-    std::cout << "The " << o.getName() << " has " << o.getHealth() << " health and is carrying " << o.getGold() << " gold." << std::endl;
 
     std::string name;
     std::cout << "Enter your name: " ; 
@@ -133,14 +170,41 @@ int main()
     Player p(name);
     std::cout << "Welcom, " << name << "."  << std::endl;
     std::cout << "You have " << p.getHealth() << " health and are carrying " << p.getGold() << " gold." << std::endl;
-    Monster m(Monster::ORC);
-    std::cout << "A " << m.getName() << " (" << m.getSymbol() << ") was created.\n";
-
-    for (int i = 0; i < 10; ++i) 
+    
+    while (!p.isDead() && !p.hasWon()) 
     {
+
         Monster m = Monster::getRandomMonster(); 
-        std::cout << "A " << m.getName() << " (" << m.getSymbol() << ") was created.\n";
+        std::cout << "You have encountered a " << m.getName() << " (" << m.getSymbol() << ")." << std::endl;
+        while (fightMonster()) // (fightMonster() && !m.isDead())
+        {
+            attackMonster(p, m);
+            if(m.isDead() || p.isDead())
+                break;
+        }
+        if (!m.isDead() && !p.isDead())
+        {
+            if (getRandomNumber(0, 1))
+            {
+                std::cout << getRandomNumber(0, 1) << std::endl;
+                attackPlayer(p, m);
+            }
+            else
+            {
+                std::cout << "You successfully fled." << std::endl;
+            }
+        }  
     }
+    if (p.isDead())
+    {
+        std::cout << "You died at level " << p.getLevel() << " and with " << p.getGold() << " gold." << std::endl;
+        std::cout << "Too bad you can't take it with you!" << std::endl;
+    }
+    else
+    {
+        std::cout << "You won with " << p.getGold() << " gold." << std::endl;    
+    }
+    
 
     return 0;
 }
