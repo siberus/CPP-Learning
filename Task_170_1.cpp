@@ -17,7 +17,7 @@
  
  public: 
  std::string getName() { return m_name; } 
- const char* m_speak() { return m_speak; } 
+ const char* speak() { return m_speak; } 
  }; 
  
  class Cat: public Animal 
