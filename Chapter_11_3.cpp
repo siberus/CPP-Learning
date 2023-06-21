@@ -205,6 +205,9 @@ int main()
         std::cout << "You won with " << p.getGold() << " gold." << std::endl;    
     }
     
+    std::cin.clear(); 
+    std::cin.ignore(32767, '\n'); 
+    std::cin.get();
 
     return 0;
 }
